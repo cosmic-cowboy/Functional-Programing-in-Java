@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,59 @@ public class PersonTest {
 			assertThat(sortedItem, is(expectedItem));				
 		}
 		
+
+	}
+
+	@Test
+	public void 年齢で昇順と降順にソートする(){
+
+		final List<Person> ascendingExpected = Arrays.asList(
+				new Person("John", 20),
+				new Person("Sara", 21),
+				new Person("Jane", 22),
+				new Person("Greg", 35)
+			);
+
+		final List<Person> descendingExpected = Arrays.asList(
+				new Person("Greg", 35),
+				new Person("Jane", 22),
+				new Person("Sara", 21),
+				new Person("John", 20)
+			);
+
+		Comparator<Person> compareAscending = 
+				(person1, person2) -> person1.ageDifferent(person2);
+		
+		Comparator<Person> compareDescending = compareAscending.reversed();
+				
+		
+		List<Person> ascendingSortedList = people
+			.stream()
+			.sorted(compareAscending)
+			.collect(Collectors.toList());
+		
+		// comparatorがないので比較ができない
+		// かなり悲しいforループを使用
+		// 名前は重複していない前提で名前での確認
+		for(int i = 0; i < ascendingSortedList.size(); i++){
+			String sortedItem = ascendingSortedList.get(i).name;
+			String expectedItem = ascendingExpected.get(i).name;
+			assertThat(sortedItem, is(expectedItem));				
+		}
+		
+		List<Person> descendingSortedList = people
+				.stream()
+				.sorted(compareDescending)
+				.collect(Collectors.toList());
+			
+			// comparatorがないので比較ができない
+			// かなり悲しいforループを使用
+			// 名前は重複していない前提で名前での確認
+			for(int i = 0; i < descendingSortedList.size(); i++){
+				String sortedItem = descendingSortedList.get(i).name;
+				String expectedItem = descendingExpected.get(i).name;
+				assertThat(sortedItem, is(expectedItem));				
+			}
 
 	}
 }
