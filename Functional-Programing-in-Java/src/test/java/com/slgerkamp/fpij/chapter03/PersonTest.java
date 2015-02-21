@@ -31,7 +31,13 @@ public class PersonTest {
 		List<Person> ageSortedList = people
 			.stream()
 			// ラムダ式
-			.sorted((person1, person2) -> person1.ageDifferent(person2))
+//			.sorted((person1, person2) -> person1.ageDifferent(person2))
+			
+			// メソッド参照に
+			// この場合、
+			// １つ目の引数がメソッド呼び出しのターゲット
+			// ２つ目の引数が呼び出しの引数
+			.sorted(Person::ageDifferent)
 			.collect(Collectors.toList());
 		
 		// comparatorがないので比較ができない
