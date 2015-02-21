@@ -29,7 +29,7 @@ public class UsingLexicalScopingAndClosures {
 	}
 
 	/**
-	 * 関数を用いてより安全に、DRYを実現する
+	 * 
 	 * @return
 	 */
 	public long countStartWithLetter_CreateFunction(){
@@ -39,14 +39,11 @@ public class UsingLexicalScopingAndClosures {
 				.count();
 	}
 	
+	
 	/**
-	 * 
+	 * 関数を用いてより安全に、DRYを実現する
 	 */
 	public Function<String, Predicate<String>> startWithLetterFunction = 
-			(String letter) -> {
-				Predicate<String> checkStarts = (String name)  -> name.startsWith(letter);
-				return checkStarts;
-			};
-			
+			(String letter) -> (String name)  -> name.startsWith(letter);
 
 }
