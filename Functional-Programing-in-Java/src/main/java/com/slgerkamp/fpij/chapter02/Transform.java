@@ -29,13 +29,15 @@ public class Transform {
 	
 	/**
 	 * ラムダ式を用いて、大文字に統一
+	 * 
+	 * メソッド参照
 	 * @return
 	 */
 	public List<String> upperWithLambda(){
 		
 		return list
 				.stream()
-				.map(item -> item.toUpperCase())
+				.map(String::toUpperCase)
 				.collect(Collectors.toList());
 	}
 }
