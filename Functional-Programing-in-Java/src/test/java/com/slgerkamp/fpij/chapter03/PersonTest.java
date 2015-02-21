@@ -6,10 +6,15 @@ import static org.junit.Assert.assertThat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
 
+/**
+ * 3.2 Comparatorインタフェースを実装
+ *
+ */
 public class PersonTest {
 	
 	final List<Person> people = Arrays.asList(
@@ -18,16 +23,25 @@ public class PersonTest {
 				new Person("John", 20),
 				new Person("Greg", 35)
 			);
+
+	// 昇順ソートの期待値
+	final List<Person> ascendingByAgeExpected = Arrays.asList(
+			new Person("John", 20),
+			new Person("Sara", 21),
+			new Person("Jane", 22),
+			new Person("Greg", 35)
+		);
+
+	// 降順ソートの期待値
+	final List<Person> descendingByAgeExpected = Arrays.asList(
+			new Person("Greg", 35),
+			new Person("Jane", 22),
+			new Person("Sara", 21),
+			new Person("John", 20)
+		);
 	
 	@Test
 	public void 年齢でソートする(){
-
-		final List<Person> expected = Arrays.asList(
-				new Person("John", 20),
-				new Person("Sara", 21),
-				new Person("Jane", 22),
-				new Person("Greg", 35)
-			);
 		
 		List<Person> ageSortedList = people
 			.stream()
@@ -41,68 +55,76 @@ public class PersonTest {
 			.sorted(Person::ageDifferent)
 			.collect(Collectors.toList());
 		
-		// comparatorがないので比較ができない
-		// かなり悲しいforループを使用
-		// 名前は重複していない前提で名前での確認
-		for(int i = 0; i < ageSortedList.size(); i++){
-			String sortedItem = ageSortedList.get(i).name;
-			String expectedItem = expected.get(i).name;
-			assertThat(sortedItem, is(expectedItem));				
-		}
-		
-
+		// 昇順ソートの確認
+		assertHelper(ageSortedList, ascendingByAgeExpected);
 	}
 
 	@Test
 	public void 年齢で昇順と降順にソートする(){
 
-		final List<Person> ascendingExpected = Arrays.asList(
-				new Person("John", 20),
-				new Person("Sara", 21),
-				new Person("Jane", 22),
-				new Person("Greg", 35)
-			);
-
-		final List<Person> descendingExpected = Arrays.asList(
-				new Person("Greg", 35),
-				new Person("Jane", 22),
-				new Person("Sara", 21),
-				new Person("John", 20)
-			);
-
+		// 昇順ソート
 		Comparator<Person> compareAscending = 
 				(person1, person2) -> person1.ageDifferent(person2);
-		
-		Comparator<Person> compareDescending = compareAscending.reversed();
-				
 		
 		List<Person> ascendingSortedList = people
 			.stream()
 			.sorted(compareAscending)
 			.collect(Collectors.toList());
-		
-		// comparatorがないので比較ができない
-		// かなり悲しいforループを使用
-		// 名前は重複していない前提で名前での確認
-		for(int i = 0; i < ascendingSortedList.size(); i++){
-			String sortedItem = ascendingSortedList.get(i).name;
-			String expectedItem = ascendingExpected.get(i).name;
-			assertThat(sortedItem, is(expectedItem));				
-		}
-		
+
+		// 降順ソート
+		Comparator<Person> compareDescending = compareAscending.reversed();
 		List<Person> descendingSortedList = people
 				.stream()
 				.sorted(compareDescending)
 				.collect(Collectors.toList());
-			
-			// comparatorがないので比較ができない
-			// かなり悲しいforループを使用
-			// 名前は重複していない前提で名前での確認
-			for(int i = 0; i < descendingSortedList.size(); i++){
-				String sortedItem = descendingSortedList.get(i).name;
-				String expectedItem = descendingExpected.get(i).name;
-				assertThat(sortedItem, is(expectedItem));				
-			}
 
+		// 昇順ソートの確認
+		assertHelper(ascendingSortedList, ascendingByAgeExpected);
+		// 降順ソートの確認
+		assertHelper(descendingSortedList, descendingByAgeExpected);
 	}
+
+	@Test
+	public void 最年少(){
+
+		final Person youngest = new Person("John", 20);
+
+		Optional<Person> person = people
+			.stream()
+			.min(Person::ageDifferent);
+		
+		// comparatorがないので比較ができない
+		// 名前は重複していない前提で名前での確認
+		assertThat(person.get().name, is(youngest.name));				
+	}
+	
+	@Test
+	public void 最年長(){
+
+		final Person eldest = new Person("Greg", 35);
+
+		Optional<Person> person = people
+			.stream()
+			.max(Person::ageDifferent);
+		
+		// comparatorがないので比較ができない
+		// 名前は重複していない前提で名前での確認
+		assertThat(person.get().name, is(eldest.name));				
+	}
+
+	/**
+	 * comparatorがないので比較ができない
+	 * かなり悲しいforループを使用
+	 * 名前は重複していない前提で名前での確認
+	 * @param actual
+	 * @param expected
+	 */
+	private void assertHelper(List<Person> actual, List<Person> expected){
+		for(int i = 0; i < actual.size(); i++){
+			String sortedItem = actual.get(i).name;
+			String expectedItem = expected.get(i).name;
+			assertThat(sortedItem, is(expectedItem));				
+		}	
+	}
+
 }

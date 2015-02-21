@@ -1,5 +1,10 @@
 package com.slgerkamp.fpij.chapter03;
 
+/**
+ * 3.2 Comparatorインタフェースを実装
+ * 
+ *
+ */
 public class Person {
 
 	// 名前
