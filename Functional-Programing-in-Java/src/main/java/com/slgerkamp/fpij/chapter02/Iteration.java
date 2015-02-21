@@ -36,8 +36,10 @@ public class Iteration {
 	 * @return
 	 */
 	public List<String> addWithLambda(){
+
 		final List<String> list = new ArrayList<>();
 		iteration.forEach(friend -> list.add(friend));
+		iteration.forEach(list::add);
 		return list;
 	}
 
