@@ -44,6 +44,6 @@ public class UsingLexicalScopingAndClosures {
 	 * 関数を用いてより安全に、DRYを実現する
 	 */
 	public Function<String, Predicate<String>> startWithLetterFunction = 
-			(String letter) -> (String name)  -> name.startsWith(letter);
+			letter -> name  -> name.startsWith(letter);
 
 }
