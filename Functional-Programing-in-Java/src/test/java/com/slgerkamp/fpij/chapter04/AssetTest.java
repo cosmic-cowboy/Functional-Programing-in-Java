@@ -35,4 +35,20 @@ public class AssetTest {
 		int total = AssertUtil.totalAssetValues(assets);
 		assertThat(total, is(10000));	
 	}
+
+	
+	@Test
+	public void 資産の中のBONDの合計() throws IOException{
+		
+		int total = AssertUtil.totalBONDValues(assets);
+		assertThat(total, is(3000));	
+	}
+
+	
+	@Test
+	public void 資産の中のSTOCKの合計() throws IOException{
+		
+		int total = AssertUtil.totalSTOCKValues(assets);
+		assertThat(total, is(7000));	
+	}
 }
