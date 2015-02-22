@@ -1,15 +1,12 @@
 package com.slgerkamp.fpij.chapter04;
 
-import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -32,7 +29,9 @@ public class AssetTest {
 	@Test
 	public void 資産を合計する() throws IOException{
 		
-		int total = AssertUtil.totalAssetValues(assets);
+		// すべての資産を対象としているので常に述語の戻り値がtrue
+		final Predicate<Asset> all = asset -> true;
+		int total = AssertUtil.totalAssetValues(assets, all);
 		assertThat(total, is(10000));	
 	}
 
@@ -40,7 +39,8 @@ public class AssetTest {
 	@Test
 	public void 資産の中のBONDの合計() throws IOException{
 		
-		int total = AssertUtil.totalBONDValues(assets);
+		final Predicate<Asset> bondSelector = asset -> asset.getType().equals(AssetType.BOND);
+		int total = AssertUtil.totalAssetValues(assets, bondSelector);
 		assertThat(total, is(3000));	
 	}
 
@@ -48,7 +48,8 @@ public class AssetTest {
 	@Test
 	public void 資産の中のSTOCKの合計() throws IOException{
 		
-		int total = AssertUtil.totalSTOCKValues(assets);
+		final Predicate<Asset> stockSelector = asset -> asset.getType().equals(AssetType.STOCK);
+		int total = AssertUtil.totalAssetValues(assets, stockSelector);
 		assertThat(total, is(7000));	
 	}
 }
