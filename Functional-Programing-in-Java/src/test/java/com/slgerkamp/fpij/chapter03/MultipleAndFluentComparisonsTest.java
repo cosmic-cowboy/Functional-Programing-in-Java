@@ -1,8 +1,5 @@
 package com.slgerkamp.fpij.chapter03;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -11,6 +8,8 @@ import static java.util.stream.Collectors.*;
 import static java.util.Comparator.*;
 
 import org.junit.Test;
+
+import com.slgerkamp.fpij.chapter03.helper.PersonComparedHelper;
 
 /**
  * 3.3 複数のプロパティによる流暢な比較
@@ -51,27 +50,27 @@ public class MultipleAndFluentComparisonsTest {
 			.sorted((person1, person2) -> person1.name.compareTo(person2.name))
 			.collect(toList());
 		
-		assertHelper(nameSortedList, nameSortedexpected);
+		PersonComparedHelper.assertHelper(nameSortedList, nameSortedexpected);
 		
 	}
 	
 	@Test
-	public void 名前でソートする_コンビニエント関数(){
+	public void 名前でソートする_コンビニエンス関数(){
 
 		final Function<Person, String> byName = person -> person.name;
 		
-		// Comparatorのコンビニエント関数
+		// Comparatorのコンビニエンス関数
 		// comparingは与えられたラムダ式からComparatorインタフェースを作成
 		List<Person> nameSortedList = people
 			.stream()
 			.sorted(comparing(byName))
 			.collect(toList());
 		
-		assertHelper(nameSortedList, nameSortedexpected);
+		PersonComparedHelper.assertHelper(nameSortedList, nameSortedexpected);
 	}
 	
 	@Test
-	public void 年齢と名前でソートする_コンビニエント関数(){
+	public void 年齢と名前でソートする_コンビニエンス関数(){
 
 		final Function<Person, Integer> byAge  = person -> person.age;
 		final Function<Person, String> byName = person -> person.name;
@@ -81,22 +80,7 @@ public class MultipleAndFluentComparisonsTest {
 			.sorted(comparing(byAge).thenComparing(byName))
 			.collect(toList());
 		
-		assertHelper(ageAndNameSortedList, ageAndNameSortedexpected);
+		PersonComparedHelper.assertHelper(ageAndNameSortedList, ageAndNameSortedexpected);
 	}
 
-	/**
-	 * comparatorがないので比較ができない
-	 * かなり悲しいforループを使用
-	 * 名前は重複していない前提で名前での確認
-	 * @param actual
-	 * @param expected
-	 */
-	private void assertHelper(List<Person> actual, List<Person> expected){
-		for(int i = 0; i < actual.size(); i++){
-			String sortedItem = actual.get(i).name;
-			String expectedItem = expected.get(i).name;
-			assertThat(sortedItem, is(expectedItem));				
-		}
-		
-	}
 }

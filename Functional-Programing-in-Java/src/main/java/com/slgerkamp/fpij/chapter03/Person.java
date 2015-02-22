@@ -8,9 +8,9 @@ package com.slgerkamp.fpij.chapter03;
 public class Person {
 
 	// 名前
-	final String name;
+	final public String name;
 	// 年齢
-	final int age;
+	final public int age;
 	
 	public Person(String name, int age) {
 		this.name = name;

@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
+import com.slgerkamp.fpij.chapter03.helper.PersonComparedHelper;
+
 /**
  * 3.2 Comparatorインタフェースを実装
  *
@@ -56,7 +58,7 @@ public class PersonTest {
 			.collect(Collectors.toList());
 		
 		// 昇順ソートの確認
-		assertHelper(ageSortedList, ascendingByAgeExpected);
+		PersonComparedHelper.assertHelper(ageSortedList, ascendingByAgeExpected);
 	}
 
 	@Test
@@ -79,9 +81,9 @@ public class PersonTest {
 				.collect(Collectors.toList());
 
 		// 昇順ソートの確認
-		assertHelper(ascendingSortedList, ascendingByAgeExpected);
+		PersonComparedHelper.assertHelper(ascendingSortedList, ascendingByAgeExpected);
 		// 降順ソートの確認
-		assertHelper(descendingSortedList, descendingByAgeExpected);
+		PersonComparedHelper.assertHelper(descendingSortedList, descendingByAgeExpected);
 	}
 
 	@Test
@@ -112,19 +114,5 @@ public class PersonTest {
 		assertThat(person.get().name, is(eldest.name));				
 	}
 
-	/**
-	 * comparatorがないので比較ができない
-	 * かなり悲しいforループを使用
-	 * 名前は重複していない前提で名前での確認
-	 * @param actual
-	 * @param expected
-	 */
-	private void assertHelper(List<Person> actual, List<Person> expected){
-		for(int i = 0; i < actual.size(); i++){
-			String sortedItem = actual.get(i).name;
-			String expectedItem = expected.get(i).name;
-			assertThat(sortedItem, is(expectedItem));				
-		}	
-	}
 
 }
