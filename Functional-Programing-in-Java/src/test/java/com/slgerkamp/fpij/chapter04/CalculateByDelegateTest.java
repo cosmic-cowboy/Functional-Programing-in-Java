@@ -33,4 +33,19 @@ public class CalculateByDelegateTest {
 
 	}
 
+	
+	@Test
+	public void 最新の株価情報を取得し現在の保有資産を計算する() throws IOException{
+		// 期待値（2015-02-23）
+		BigDecimal expected = new BigDecimal("538950.00");
+		
+		// 計算
+		CalculateByDelegate stockCalculate = new CalculateByDelegate(YahooFinance::getPrice);
+		BigDecimal stock = stockCalculate.computeStockWorth("GOOG", 1000);
+		
+		// 確認
+		assertThat(stock, is(expected));
+
+	}
+
 }
