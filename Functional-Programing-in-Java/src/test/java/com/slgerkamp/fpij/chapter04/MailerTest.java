@@ -55,6 +55,26 @@ public class MailerTest {
 		assertThat(mail.body,    is(BODY));	
 	}
 
+	@Test
+	public void ラムダを使ってメールを作成する(){
+
+		// 本来こんな形では生成しない
+		// 少なくともbuilderを使う
+		Mail_JavaBean mail = Mailer_Fluent.send(mailer -> 
+			mailer
+				.from(FROMADRESS)
+				.to(TOADRESS)
+				.subject(SUBJECT)
+				.body(BODY)
+			);
+		
+		
+		
+		assertThat(mail.getFrom(),    is(FROMADRESS));	
+		assertThat(mail.getTo(),      is(TOADRESS));	
+		assertThat(mail.getSubject(), is(SUBJECT));	
+		assertThat(mail.getBody(),    is(BODY));	
+	}
 
 
 }
