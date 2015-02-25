@@ -3,7 +3,6 @@ package com.slgerkamp.fpij.chapter04;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.awt.Color;
 
 import org.junit.Test;
 
@@ -35,6 +34,25 @@ public class MailerTest {
 		assertThat(mail.getTo(),      is(TOADRESS));	
 		assertThat(mail.getSubject(), is(SUBJECT));	
 		assertThat(mail.getBody(),    is(BODY));	
+	}
+
+	
+	@Test
+	public void ビルダーを使ってメールを作成する(){
+
+		// 本来こんな形では生成しない
+		// 少なくともbuilderを使う
+		Mailer_Builder mailer = new Mailer_Builder();
+		mailer.from(FROMADRESS);
+		mailer.to(TOADRESS);
+		mailer.subject(SUBJECT);
+		mailer.body(BODY);
+		Mail_Builder mail = mailer.send();
+		
+		assertThat(mail.from,    is(FROMADRESS));	
+		assertThat(mail.to,      is(TOADRESS));	
+		assertThat(mail.subject, is(SUBJECT));	
+		assertThat(mail.body,    is(BODY));	
 	}
 
 
