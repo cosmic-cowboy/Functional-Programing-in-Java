@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class FileWriterTest {
 	final static String FILENAME_02 = "peekaboo_02.txt";
 	final static String FILENAME_03 = "peekaboo_03.txt";
 	final static String FILENAME_04 = "peekaboo_04.txt";
+	final static String FILENAME_05 = "peekaboo_05.txt";
 	final static String MESSAGE = "peek-a-boo";
 	
 	@Test
@@ -63,6 +65,21 @@ public class FileWriterTest {
 				writer -> writer.writeStuff(MESSAGE));
 		
 		assertThat(readFile(FILENAME_04), is(MESSAGE));			
+	}
+
+
+	@Test
+	public void 高階関数を利用してリソースを閉じる_useメソッドを利用しない() throws IOException, Exception{
+
+		UseInstance<FileWriter, IOException> safetyWriter = writer -> writer.write(MESSAGE);
+		FileWriter writer = new FileWriter(FILENAME_05);
+		try{
+			safetyWriter.accept(writer);			
+		} finally {
+			writer.close();
+		}
+		
+		assertThat(readFile(FILENAME_05), is(MESSAGE));			
 	}
 
 
