@@ -7,6 +7,10 @@ import com.slgerkamp.fpij.designpattern.nonlamda.command.command.UpMotion;
 import com.slgerkamp.fpij.designpattern.nonlamda.command.invoker.TurtleMover;
 import com.slgerkamp.fpij.designpattern.nonlamda.command.receiver.Turtle;
 
+/**
+ * <p>参照：http://codezine.jp/article/detail/8300
+ *
+ */
 public class CommandTurtleSimulator {
 
 	public static void main(String[] args) {

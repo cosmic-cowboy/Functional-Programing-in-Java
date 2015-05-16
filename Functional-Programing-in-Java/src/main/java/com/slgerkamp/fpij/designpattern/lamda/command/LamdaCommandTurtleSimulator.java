@@ -3,6 +3,10 @@ package com.slgerkamp.fpij.designpattern.lamda.command;
 import com.slgerkamp.fpij.designpattern.nonlamda.command.invoker.TurtleMover;
 import com.slgerkamp.fpij.designpattern.nonlamda.command.receiver.Turtle;
 
+/**
+ * <p>参照：http://codezine.jp/article/detail/8300
+ *
+ */
 public class LamdaCommandTurtleSimulator {
 
 	public static void main(String[] args) {

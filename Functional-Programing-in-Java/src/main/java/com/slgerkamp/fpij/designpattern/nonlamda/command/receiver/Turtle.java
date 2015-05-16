@@ -1,6 +1,7 @@
 package com.slgerkamp.fpij.designpattern.nonlamda.command.receiver;
 
 /**
+ * <p>参照：http://codezine.jp/article/detail/8300
  * <p>亀（位置を表す）
  * <p>Receiver：動作の対象となるオブジェクトのクラスあるいはインタフェース
  *

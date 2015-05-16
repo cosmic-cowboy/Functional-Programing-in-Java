@@ -7,6 +7,7 @@ import com.slgerkamp.fpij.designpattern.nonlamda.command.command.Motion;
 import com.slgerkamp.fpij.designpattern.nonlamda.command.receiver.Turtle;
 
 /**
+ * <p>参照：http://codezine.jp/article/detail/8300
  * <p>亀の動きを制御する
  * <p>Invoker：登録されたコマンドオブジェクトを用いて動作を起動するクラス
  *
